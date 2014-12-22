@@ -11,7 +11,7 @@
 # Version of October 2014
 # Public domain
 
-TEMPDIR=`dirname $(tempfile)`
+OUTPUTDIR=`dirname $(tempfile)`
 
 function usage() {
   cat << EOF
@@ -82,14 +82,14 @@ function prepare-zip() {
   DOC=${TEXFILE:0:${#TEXFILE}-4}
   PDF=$DOC.pdf
 
-  DIR=$TEMPDIR/${DOC}_d
+  DIR=$OUTPUTDIR/${DOC}_d
 
   # now cleaning the directory before zip
   #rubber --clean $DOC # we now use latexmk
   latexmk -C $DOC
 
 
-  ZIPFILE=$TEMPDIR/$DOC-v`date +%Y%m%d`.zip
+  ZIPFILE=$OUTPUTDIR/$DOC-v`date +%Y%m%d`.zip
 
   echo output to $DIR
   mkdir -p $DIR
@@ -102,7 +102,7 @@ function prepare-zip() {
   # for Arxiv we need the bbl
   cp $DOC.bbl $DIR
 
-  PP=$TEMPDIR/$DOC.tex
+  PP=$OUTPUTDIR/$DOC.tex
   echo copying tex files ...
   preprocess-latex $TEXFILE > $PP
 
