@@ -9,6 +9,10 @@
 #
 # Author: Martin Monperrus
 # Version of October 2014
+# Modified by Jonathan Passerat-Palmbach (22/12/2014)
+#  * bug fix
+#  * new options (-i, -o)
+#  * slight refactor
 # Public domain
 
 OUTPUTDIR=`dirname $(tempfile)`
