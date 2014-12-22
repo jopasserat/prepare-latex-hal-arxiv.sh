@@ -15,9 +15,11 @@ OUTPUTDIR=`dirname $(tempfile)`
 
 function usage() {
   cat << EOF
-  Creates a zip file containing all sources of a LaTeX document to be submitted to Arxiv
-  Usage:
-  $0 file.tex 
+Creates a zip file containing all sources of a LaTeX document to be submitted to Arxiv.
+Usage:
+  $0 [ -p infile.tex ] (pre-process only)
+  $0 [ -i infile.tex ] [ -o outdir ]
+  $0 infile.tex
 EOF
   exit
 }  # end function usage
