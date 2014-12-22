@@ -148,22 +148,11 @@ function prepare-zip() {
   #for i in *{png,jpg}; do convert $i $i.eps; done
 
 
-  pushd $DIR 
   echo zipping ...
 
   zip -r $ZIPFILE .
-  popd
 
-
-  echo compiling
-  pdflatex $DOC
-  bibtex $DOC
-  if [[ $? != 0 ]];
-  then
-    echo not able to bibtex
-    exit
-  fi
-
+  echo compiling...
   pdflatex $DOC
   pdflatex $DOC
 
