@@ -90,7 +90,6 @@ function prepare-zip() {
 
   echo output to $DIR
   mkdir -p $DIR
-  #exit
 
   echo cleaning ...
   rm $ZIPFILE 2>/dev/null
@@ -143,7 +142,7 @@ function prepare-zip() {
     fi
   done
 
-  echo now entenring target directory
+  echo now entering target directory
   cd $DIR
   for i in *dia; do dia -t eps $i; done
   #for i in *{png,jpg}; do convert $i $i.eps; done
