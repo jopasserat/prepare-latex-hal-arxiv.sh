@@ -20,7 +20,7 @@ function usage() {
 Creates a zip file containing all sources of a LaTeX document to be submitted to Arxiv.
 Usage:
   $0 [ -p infile.tex ] (pre-process only)
-  $0 [ -i infile.tex ] [ -o outdir ]
+  $0 [ -i infile.tex ] [ -o outdir ] [ -c preview<0|1> ]
   $0 infile.tex
 EOF
   exit
@@ -152,14 +152,16 @@ function prepare-zip() {
 
   zip -r $ZIPFILE .
 
-  echo compiling...
-  pdflatex $DOC
-  pdflatex $DOC
+  if [ ${CHECK_PREVIEW} -eq 1 ]; then
+    echo compiling...
+    pdflatex $DOC
+    pdflatex $DOC
 
-  OUTPUT=$DIR/$DOC-v`date +%Y%m%d`.pdf
-  cp $DOC.pdf $OUTPUT
+    OUTPUT=$DIR/$DOC-v`date +%Y%m%d`.pdf
+    cp $DOC.pdf $OUTPUT
 
-  xdg-open $OUTPUT > /dev/null 2>&1&
+    xdg-open $OUTPUT > /dev/null 2>&1&
+  fi
 
   unzip -l $ZIPFILE
   echo $ZIPFILE
@@ -174,8 +176,9 @@ then
 fi
 
 OUTPUT_DIR=`dirname $(tempfile)`
+CHECK_PREVIEW=1
 
-optspec=":p:o:i:"
+optspec=":p:o:i:c:"
 while getopts ${optspec} opt
 do
   case "$opt" in
@@ -183,6 +186,7 @@ do
     p) preprocess-latex ${OPTARG}; exit;;
     o) OUTPUT_DIR=${OPTARG};;
     i) INPUT_FILE=${OPTARG};;
+    c) CHECK_PREVIEW=${OPTARG};;
     *) usage;;
   esac
 done
