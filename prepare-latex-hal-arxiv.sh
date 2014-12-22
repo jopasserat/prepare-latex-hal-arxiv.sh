@@ -85,14 +85,7 @@ function prepare-zip() {
 
   DOC=${TEXFILE:0:${#TEXFILE}-4}
   PDF=$DOC.pdf
-
   DIR=$OUTPUT_DIR/${DOC}_d
-
-  # now cleaning the directory before zip
-  #rubber --clean $DOC # we now use latexmk
-  latexmk -C $DOC
-
-
   ZIPFILE=$OUTPUT_DIR/$DOC-v`date +%Y%m%d`.zip
 
   echo output to $DIR
