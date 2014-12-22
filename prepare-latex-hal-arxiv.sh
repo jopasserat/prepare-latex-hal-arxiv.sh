@@ -186,12 +186,13 @@ then
   usage  
 fi
 
-optspec=":p:h:"
+optspec=":p:o:"
 while getopts ${optspec} opt
 do
   case "$opt" in
     # "-p" means only preprocessing
     p) preprocess-latex ${OPTARG}; exit;;
+    o) OUTPUT_DIR=${OPTARG};;
     *) usage;;
   esac
 done
