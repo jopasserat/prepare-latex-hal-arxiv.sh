@@ -186,16 +186,23 @@ then
   usage  
 fi
 
-optspec=":p:o:"
+optspec=":p:o:i:"
 while getopts ${optspec} opt
 do
   case "$opt" in
     # "-p" means only preprocessing
     p) preprocess-latex ${OPTARG}; exit;;
     o) OUTPUT_DIR=${OPTARG};;
+    i) INPUT_FILE=${OPTARG};;
     *) usage;;
   esac
 done
 
-prepare-zip $1
+# allow backward compatibility to input files as $1
+if [ -z ${INPUT_FILE} ]; then
+  shift $((OPTIND-1))
+  INPUT_FILE=$1
+fi
+
+prepare-zip $INPUT_FILE
 
