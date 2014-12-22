@@ -22,6 +22,8 @@ Usage:
   $0 [ -p infile.tex ] (pre-process only)
   $0 [ -i infile.tex ] [ -o outdir ] [ -c preview<0|1> ]
   $0 infile.tex
+
+Please note that the outdir option to -o cannot be your source file's parent directory (current approach would wipe out your LaTeX source file and you don't want that, do you?) 
 EOF
   exit
 }  # end function usage
@@ -195,6 +197,12 @@ done
 if [ -z ${INPUT_FILE} ]; then
   shift $((OPTIND-1))
   INPUT_FILE=$1
+fi
+
+# prevent source file clash
+INPUT_FILE_DIR=`dirname ${INPUT_FILE}`
+if [ `readlink -f ${INPUT_FILE_DIR}` == `readlink -f ${OUTPUT_DIR}` ]; then 
+  usage
 fi
 
 prepare-zip $INPUT_FILE
