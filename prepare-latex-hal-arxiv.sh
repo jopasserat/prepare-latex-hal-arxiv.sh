@@ -15,8 +15,6 @@
 #  * slight refactor
 # Public domain
 
-OUTPUTDIR=`dirname $(tempfile)`
-
 function usage() {
   cat << EOF
 Creates a zip file containing all sources of a LaTeX document to be submitted to Arxiv.
@@ -88,14 +86,14 @@ function prepare-zip() {
   DOC=${TEXFILE:0:${#TEXFILE}-4}
   PDF=$DOC.pdf
 
-  DIR=$OUTPUTDIR/${DOC}_d
+  DIR=$OUTPUT_DIR/${DOC}_d
 
   # now cleaning the directory before zip
   #rubber --clean $DOC # we now use latexmk
   latexmk -C $DOC
 
 
-  ZIPFILE=$OUTPUTDIR/$DOC-v`date +%Y%m%d`.zip
+  ZIPFILE=$OUTPUT_DIR/$DOC-v`date +%Y%m%d`.zip
 
   echo output to $DIR
   mkdir -p $DIR
@@ -108,7 +106,7 @@ function prepare-zip() {
   # for Arxiv we need the bbl
   cp $DOC.bbl $DIR
 
-  PP=$OUTPUTDIR/$DOC.tex
+  PP=$OUTPUT_DIR/$DOC.tex
   echo copying tex files ...
   preprocess-latex $TEXFILE > $PP
 
@@ -186,11 +184,15 @@ function prepare-zip() {
   echo $ZIPFILE
 } # end function prepare-zip
 
+#### script begins here ####
+
 # no parameter given
 if [ -z $1 ];
 then 
   usage  
 fi
+
+OUTPUT_DIR=`dirname $(tempfile)`
 
 optspec=":p:o:i:"
 while getopts ${optspec} opt
