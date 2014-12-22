@@ -186,13 +186,15 @@ then
   usage  
 fi
 
-while getopts p opt
+optspec=":p:h:"
+while getopts ${optspec} opt
 do
   case "$opt" in
     # "-p" means only preprocessing
-    p) preprocess-latex $2; exit;;
-    \?) usage;;
+    p) preprocess-latex ${OPTARG}; exit;;
+    *) usage;;
   esac
 done
 
 prepare-zip $1
+
