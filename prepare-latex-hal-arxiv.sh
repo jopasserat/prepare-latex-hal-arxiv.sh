@@ -77,7 +77,7 @@ function prepare-zip() {
   TEXFILE=$1
 
   # first we compile to regenerate the bbl and all stuff
-  latexmk -pdf TEXFILE
+  latexmk -pdf ${TEXFILE}
 
   DOC=${TEXFILE:0:${#TEXFILE}-4}
   PDF=$DOC.pdf
